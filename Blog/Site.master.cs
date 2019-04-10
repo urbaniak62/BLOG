@@ -42,6 +42,35 @@ public partial class SiteMaster : MasterPage
             Response.Cookies.Set(responseCookie);
         }
 
+        
+
+        HttpCookie reqCookies = Request.Cookies["userId"];
+        var urlActuelle = HttpContext.Current.Request.Path;
+        //niveau
+        //email
+        //cookie ou session
+        //si connecté et admin ou cookie avec droit admin pas de soucis
+        //sinon empecher administration
+        HttpCookie cookies = Request.Cookies["niveauUserBlog"];
+        if ((cookies!=null&& cookies.Value=="2")||(Session["email"]!=null && Session["niveau"].ToString()=="4") && urlActuelle.Contains("Administration"))
+        {
+
+        }
+        else if (urlActuelle.Contains("Administration"))
+        {
+            Response.Redirect("/connection.aspx");
+        }
+
+        
+        if (Session["niveau"] != null)
+        {
+
+        }
+        //if (reqCookies==null && urlActuelle.Contains("Administration"))
+        //{
+        //    Response.Redirect("/Default.aspx");
+        //}
+
         Page.PreLoad += master_Page_PreLoad;
     }
 

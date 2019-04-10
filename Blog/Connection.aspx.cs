@@ -11,8 +11,8 @@ public partial class Connection : System.Web.UI.Page
     string cnx = @"Data Source=STA6101318\SQLEXPRESS;Initial Catalog=BLOG;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
     protected void Page_Load(object sender, EventArgs e)
     {
-        HttpCookie cookie = Request.Cookies["userId"];
-        LB_message.Text = cookie.Value;
+        //HttpCookie cookie = Request.Cookies["userId"];
+        //LB_message.Text = cookie.Value;
     }
 
     protected void btn_Submit_Click(object sender, EventArgs e)
@@ -40,10 +40,15 @@ public partial class Connection : System.Web.UI.Page
                         if (CB_Remember.Checked)
                         {
                             HttpCookie httpCookie = new HttpCookie("userId", txtb_Login.Text);
+                            httpCookie.Expires = DateTime.Now.AddMonths(1);
                             Response.Cookies.Add(httpCookie);
+                            HttpCookie httpCookie2 = new HttpCookie("niveauUserBlog", IdTypeUtilisateur.ToString());
+                            httpCookie2.Expires = DateTime.Now.AddMonths(1);
+                            Response.Cookies.Add(httpCookie2);
                             Response.Redirect("/Default.aspx");
 
                         }
+                  
                         Response.Redirect("/Default.aspx");
 
                     }
@@ -51,13 +56,19 @@ public partial class Connection : System.Web.UI.Page
                     {
                         Session["email"] = txtb_Login.Text;
                         Session["niveau"] = IdTypeUtilisateur;
+                       
+
                         if (CB_Remember.Checked)
                         {
                             HttpCookie httpCookie = new HttpCookie("Admin", txtb_Login.Text);
                             Response.Cookies.Add(httpCookie);
+                            HttpCookie httpCookie2 = new HttpCookie("niveauUserBlog", IdTypeUtilisateur.ToString());
+                            Response.Cookies.Add(httpCookie2);
+                            httpCookie2.Expires = DateTime.Now.AddMonths(1);
                             Response.Redirect("/Administration.aspx");
 
                         }
+                     
                         Response.Redirect("/Administration.aspx");
 
                     }

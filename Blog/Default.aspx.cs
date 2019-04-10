@@ -10,6 +10,11 @@ public partial class _Default : Page
     protected void Page_Load(object sender, EventArgs e)
     {
         HttpCookie cookie = Request.Cookies["userId"];
-        LB_message.Text = "bienvenue :"+cookie.Value;
+       
+        if (cookie != null)
+        {
+            LB_message.Text = "bienvenue :" + cookie.Value;
+        }
+       
     }
 }
